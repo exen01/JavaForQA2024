@@ -1,21 +1,30 @@
 package ru.shop.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import ru.shop.model.Customer;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.UUID;
 
-public class CustomerRepository implements IRepository<Customer> {
+@Repository
+public interface CustomerRepository extends JpaRepository<Customer, UUID> {
 
-    List<Customer> customers = new ArrayList<>();
-
-    @Override
-    public void save(Customer customer) {
-        customers.add(customer);
-    }
-
-    @Override
-    public List<Customer> findAll() {
-        return customers;
-    }
+//    List<Customer> customers = new ArrayList<>();
+//
+//    @Override
+//    public void save(Customer customer) {
+//        customers.add(customer);
+//    }
+//
+//    @Override
+//    public List<Customer> findAll() {
+//        return customers;
+//    }
+//
+//    @Override
+//    public Optional<Customer> findById(UUID id) {
+//        return customers.stream()
+//                .filter(customer -> customer.getId().equals(id))
+//                .findFirst();
+//    }
 }

@@ -1,18 +1,21 @@
 package ru.shop.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import ru.shop.exception.EntityNotFoundException;
 import ru.shop.model.Product;
 import ru.shop.model.ProductType;
-import ru.shop.repository.IRepository;
+import ru.shop.repository.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
+@Service
 public class ProductService {
 
-    private final IRepository<Product> repository;
-
+    private final ProductRepository repository;
 
     public void save(Product product) {
         repository.save(product);
@@ -30,5 +33,9 @@ public class ProductService {
             }
         }
         return result;
+    }
+
+    public Product findById(UUID id) {
+        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 }

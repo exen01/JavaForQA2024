@@ -1,20 +1,23 @@
 package ru.shop.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import ru.shop.exception.BadOrderCountException;
+import ru.shop.exception.EntityNotFoundException;
 import ru.shop.model.Customer;
 import ru.shop.model.Order;
 import ru.shop.model.Product;
-import ru.shop.repository.IRepository;
+import ru.shop.repository.OrderRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
+@Service
 public class OrderService {
 
-    private final IRepository<Order> repository;
+    private final OrderRepository repository;
 
     public void add(Customer customer, Product product, long count) {
         if (count <= 0) {
@@ -47,4 +50,19 @@ public class OrderService {
         return repository.findAll();
     }
 
+    public Order findById(UUID id) {
+        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public List<Order> getByCustomerId(UUID customerId) {
+        return repository.findByCustomerId(customerId);
+    }
+
+//    public long getCustomerTotal(UUID customerId) {
+//        return repository.getCustomerTotal(customerId);
+//    }
+
+    public void save(Order order) {
+        repository.save(order);
+    }
 }
